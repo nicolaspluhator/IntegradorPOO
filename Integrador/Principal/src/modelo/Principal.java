@@ -16,9 +16,24 @@ public class Principal {
     public static void main(String[] args) {
 
         Empresa emp = new Empresa(1,"Empresadeprueba","direc","4567891","asdasd@hotmail");
+        
         emp.altaEmpleado("1","Nicolas","Pluhator", "Lavallle", "4324234", "nicolaspluhator@hotmail.com");
+        emp.altaEmpleado("2","Nico","Pluton", "Lavallle", "39638929", "masternikito@hotmail.com");
+        emp.bajaEmpleado("2");
+        emp.modificarEmpleado("1", "Cristian", "Pluhator", "Lavalle", "39638929", "nicolaspluhator@hotmail.com");
         
+        emp.altaProveedor("nombre", "asd", "dsdsd", "wesaa");
+        emp.altaProveedor("ASDASD", "asd", "dsdsd", "wesaa");
+        emp.altaProveedor("ASDASD", "asd", "dsdsd", "wesaa");
+        emp.altaProveedor("ASDASD", "asd", "dsdsd", "wesaa");
+        //emp.bajaProveedor(2);
+        emp.modificarProveedor(1, "LA EMPRESA", "DALE QUE SALE", "ADSADA", "DASDASD");
         
+        emp.altaFabricante("nom", "asd", "des", "RARWRW");
+        emp.altaFabricante("nom2", "asd3", "des1", "RARWRW2");
+        emp.altaFabricante("nom3", "assadad3", "fdsades1", "adsfRARWRW2");
+        emp.bajaFabricante(1);
+        emp.modificarFabricante(2, "cambio", "eseeee", "jojojo", "tortolo");
     }
     
 }

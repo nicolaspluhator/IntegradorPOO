@@ -5,6 +5,7 @@
  */
 package modelo;
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.*;
 /**
  *
@@ -14,6 +15,8 @@ import javax.persistence.*;
 @Table(name="Fabricante")
 public class Fabricante implements Serializable {
     @Id
+    @SequenceGenerator(name="sec_fabricante", initialValue=1, allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sec_fabricante")
     private int id;
     @Column(name="Nombre",length=30)
     private String nombre;
@@ -26,8 +29,8 @@ public class Fabricante implements Serializable {
     
     
     //Relaciones
-    @ManyToOne
-    private Pieza piezafa;
+    @ManyToMany (mappedBy="fabricantes")
+    private Set<Pieza> piezafa;
     @ManyToOne
     private Empresa empreFa;
     //Constructores...
@@ -35,11 +38,22 @@ public class Fabricante implements Serializable {
     
     }
 
-    public Fabricante(String n,String t,String e,String d){
+    public Fabricante(String n,String t,String e,String d, Empresa emp, Pieza pie){
+
         this.nombre= n;
         this.telefono= t;
         this.email= e;
         this.descripcion= d;
+        this.empreFa = emp;
+    }
+    
+    //GETERS Y SETERS
+    
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
     }
     
     /**
@@ -104,16 +118,18 @@ public class Fabricante implements Serializable {
     }
 
     /**
-     * @return the id
+     * @return the piezafa
      */
-    public int getId() {
-        return id;
+    public Set<Pieza> getPiezafa() {
+        return piezafa;
     }
 
     /**
-     * @param id the id to set
+     * @param piezafa the piezafa to set
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setPiezafa(Pieza piezafa) {
+        this.piezafa.add(piezafa);
     }
+
+
 }

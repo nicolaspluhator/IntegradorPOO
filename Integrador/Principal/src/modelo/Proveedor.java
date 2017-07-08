@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package modelo;
+import java.util.Set;
 import javax.persistence.*;
 /**
  *
@@ -13,6 +14,8 @@ import javax.persistence.*;
 @Table(name="Proveedor")
 public class Proveedor {
     @Id
+    @SequenceGenerator(name="sec_pro", initialValue=1, allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sec_pro")
     private int id;
     @Column(name="Nombre")
     private String nombre;
@@ -24,8 +27,8 @@ public class Proveedor {
     private String descripcion;
     
     //Relaciones
-    @ManyToOne
-    private Pieza piezapro;
+    @ManyToMany (mappedBy = "proveedores")
+    private Set<Pieza> piezapro;
     @ManyToOne
     private Empresa empresapro;
     
@@ -35,25 +38,19 @@ public class Proveedor {
     
     }
 
-    public Proveedor(int i,String n,String t,String e,String d){
-        this.id = i;
+    public Proveedor(String n,String t,String e,String d,Empresa emp){
         this.nombre =n;
         this.telefono = t;
         this.email = e;
         this.descripcion = d;
+        this.empresapro = emp;
+
     }
     /**
      * @return the id
      */
     public int getId() {
         return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
     }
 
     /**
@@ -116,5 +113,20 @@ public class Proveedor {
     public String toString(){
         return "Datos de Proveedor: " + "\nIdentificador: " + this.getId() + "\nNombre: " + this.getNombre() + "\nTelefono: "+this.getTelefono()+"\nE-mail: "+this.getEmail()+"\nDescripcion: "+this.getDescripcion();
     }
+
+    /**
+     * @return the piezapro
+     */
+    public Set<Pieza> getPiezapro() {
+        return piezapro;
+    }
+
+    /**
+     * @param piezapro the piezapro to set
+     */
+    public void setPiezapro(Pieza piezapro) {
+        this.piezapro.add(piezapro);
+    }
+
     
 }

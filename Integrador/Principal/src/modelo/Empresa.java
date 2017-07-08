@@ -168,6 +168,20 @@ public class Empresa implements Serializable,Comparable {
     public void setProveedores(Proveedor proveedores) {
         this.proveedores.add(proveedores);
     }
+    
+        /**
+     * @return the fabricantes
+     */
+    public Set<Fabricante> getFabricantes() {
+        return fabricantes;
+    }
+
+    /**
+     * @param fabricantes the fabricantes to set
+     */
+    public void setFabricantes(Fabricante fabricantes) {
+        this.fabricantes.add(fabricantes);
+    }
 
     static {
         persistencia = new Persistencia();
@@ -183,6 +197,9 @@ public class Empresa implements Serializable,Comparable {
     }
 
 // Métodos personalizados    
+    
+    
+ //  ---------------       EMPLEADO   ----------------------------------------------
     
     public Empleado buscarEmpleado(String cuil) {
         Empleado unEmpleado = (Empleado) Empresa.getPersistencia().buscar(Empleado.class, cuil);
@@ -236,5 +253,109 @@ public class Empresa implements Serializable,Comparable {
         return 1;
     }
 
+    //  --------------------- PROVEEDORES -----------------------------------------------------
     
+        public Proveedor buscarProveedor(int id) {
+        Proveedor unProveedor = (Proveedor) Empresa.getPersistencia().buscar(Proveedor.class, id);
+        return unProveedor;
+    }
+    
+    public Proveedor altaProveedor (String n,String t,String e,String d){
+        Proveedor unProveedor = null;
+        unProveedor = new Proveedor (n,t,e,d,this);
+        this.setProveedores(unProveedor);
+        Empresa.getPersistencia().insertar(unProveedor);
+        Empresa.getPersistencia().refrescar(this);
+
+        return unProveedor;
+    }
+
+    public Proveedor modificarProveedor(int i,String n,String t,String e,String d){
+        Proveedor unProveedor = this.buscarProveedor(i);
+        if(unProveedor != null){
+            //Como estos son valores autogenerados no pueden ser modificados una vez registrados por el cliente
+            unProveedor.setNombre(n);
+            unProveedor.setTelefono(t);
+            unProveedor.setEmail(e);
+            unProveedor.setDescripcion(d);
+            Empresa.getPersistencia().modificar(unProveedor);
+            Empresa.getPersistencia().refrescar(this);
+        }else{
+            System.out.println("El proveedor a modificar no existe ... ");
+        }
+        return unProveedor;
+    }
+    
+    public Proveedor bajaProveedor(int i){
+        Proveedor unProveedor = this.buscarProveedor(i);
+        if(unProveedor != null){
+            Empresa.getPersistencia().eliminar(unProveedor);
+            Empresa.getPersistencia().refrescar(this);
+        }else{
+            System.out.println("El proveedor a eliminar no existe ... ");
+        }
+        return unProveedor;
+    }
+ 
+    // ---------------------------- FABRICANTE ---------------------------------------------
+    
+      public Fabricante buscarFabricante(int id) {
+        Fabricante unFabricante = (Fabricante) Empresa.getPersistencia().buscar(Fabricante.class, id);
+        return unFabricante;
+    }
+    
+    
+    
+    public Fabricante altaFabricante (String n,String a,String d,String t){
+        Fabricante unFabricante = null;
+        
+            unFabricante = new Fabricante (n,a,d,t,this,null);
+            this.setFabricantes(unFabricante);
+            Empresa.getPersistencia().insertar(unFabricante);
+            Empresa.getPersistencia().refrescar(this);
+            
+
+        return unFabricante;
+    }
+    
+     public Fabricante bajaFabricante(int c){
+        Fabricante unFabricante = this.buscarFabricante(c);
+        if(unFabricante != null){
+            Empresa.getPersistencia().eliminar(unFabricante);
+            Empresa.getPersistencia().refrescar(this);
+        }else{
+            System.out.println("El Fabricante a eliminar no existe ... ");
+        }
+        return unFabricante;
+    }
+    
+    
+     public Fabricante modificarFabricante(int c, String n,String a,String d,String t){
+        Fabricante unFabricante = this.buscarFabricante(c);
+        if(unFabricante != null){
+            
+            unFabricante.setNombre(n);
+            unFabricante.setTelefono(a);
+            unFabricante.setEmail(d);
+            unFabricante.setDescripcion(t);            
+            Empresa.getPersistencia().modificar(unFabricante);
+            Empresa.getPersistencia().refrescar(this);
+        }else{
+            System.out.println("El Fabricante a modificar no existe ... ");
+        }
+        return unFabricante;
+    }
+    
+     public Fabricante modificarFabricante2(int c, Pieza n){
+        Fabricante unFabricante = this.buscarFabricante(c);
+                    
+            unFabricante.setPiezafa(n);
+            Empresa.getPersistencia().modificar(unFabricante);
+            Empresa.getPersistencia().refrescar(this);
+
+        return unFabricante;
+    }
+
+
+
 }

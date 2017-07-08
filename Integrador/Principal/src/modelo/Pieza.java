@@ -18,11 +18,11 @@ public class Pieza implements Serializable {
     private int nropieza;
     @Column(name="Denominacion",length=30)
     private String denominacion;
-    @OneToMany (mappedBy = "piezapro")
+    @ManyToMany 
     private Set<Proveedor> proveedores;
     @OneToMany (mappedBy = "piezaequi")
     private Set<Equipo> equipos;
-    @OneToMany (mappedBy = "piezafa")
+    @ManyToMany
     private Set<Fabricante> fabricantes;
     @ManyToOne
     private Mantenimiento mantenimiento;
@@ -39,6 +39,21 @@ public class Pieza implements Serializable {
         this.fabricantes = new TreeSet<>();
     }
 
+    
+    /**
+     * @return the nropieza
+     */
+    public int getNropieza() {
+        return nropieza;
+    }
+
+    /**
+     * @param nropieza the nropieza to set
+     */
+    public void setNropieza(int nropieza) {
+        this.nropieza = nropieza;
+    }
+    
     /**
      * @return the denominacion
      */
@@ -100,18 +115,5 @@ public class Pieza implements Serializable {
         return "Datos de pieza: " + "\nDenominacion: " + this.getDenominacion()+"\nProveedores: "+this.proveedores +"\nEquipos: "+this.equipos;
     }
 
-    /**
-     * @return the nropieza
-     */
-    public int getNropieza() {
-        return nropieza;
-    }
-
-    /**
-     * @param nropieza the nropieza to set
-     */
-    public void setNropieza(int nropieza) {
-        this.nropieza = nropieza;
-    }
 
 }
