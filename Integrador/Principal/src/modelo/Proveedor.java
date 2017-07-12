@@ -13,6 +13,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="Proveedor")
 public class Proveedor {
+
+    //ATRIBUTOS
     @Id
     @SequenceGenerator(name="sec_pro", initialValue=1, allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sec_pro")
@@ -109,12 +111,7 @@ public class Proveedor {
         this.descripcion = descripcion;
     }
     
-    @Override
-    public String toString(){
-        return "Datos de Proveedor: " + "\nIdentificador: " + this.getId() + "\nNombre: " + this.getNombre() + "\nTelefono: "+this.getTelefono()+"\nE-mail: "+this.getEmail()+"\nDescripcion: "+this.getDescripcion();
-    }
-
-    /**
+        /**
      * @return the piezapro
      */
     public Set<Pieza> getPiezapro() {
@@ -127,6 +124,25 @@ public class Proveedor {
     public void setPiezapro(Pieza piezapro) {
         this.piezapro.add(piezapro);
     }
+    
+    
+    /**
+     * @return the empresapro
+     */
+    public Empresa getEmpresapro() {
+        return empresapro;
+    }
 
+    /**
+     * @param empresapro the empresapro to set
+     */
+    public void setEmpresapro(Empresa empresapro) {
+        this.empresapro = empresapro;
+    }
+    
+    @Override
+    public String toString(){
+        return "Datos de Proveedor: " + "\nIdentificador: " + this.getId() + "\nNombre: " + this.getNombre() + "\nTelefono: "+this.getTelefono()+"\nE-mail: "+this.getEmail()+"\nDescripcion: "+this.getDescripcion();
+    }
     
 }

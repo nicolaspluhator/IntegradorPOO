@@ -14,6 +14,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="Fabricante")
 public class Fabricante implements Serializable {
+    
+    //ATRIBUTOS
     @Id
     @SequenceGenerator(name="sec_fabricante", initialValue=1, allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sec_fabricante")
@@ -33,18 +35,20 @@ public class Fabricante implements Serializable {
     private Set<Pieza> piezafa;
     @ManyToOne
     private Empresa empreFa;
+    
     //Constructores...
     public Fabricante(){
     
     }
 
-    public Fabricante(String n,String t,String e,String d, Empresa emp, Pieza pie){
+    public Fabricante(String n,String t,String e,String d, Empresa emp){
 
         this.nombre= n;
         this.telefono= t;
         this.email= e;
         this.descripcion= d;
         this.empreFa = emp;
+        
     }
     
     //GETERS Y SETERS
@@ -112,11 +116,7 @@ public class Fabricante implements Serializable {
         this.descripcion = descripcion;
     }
     
-    @Override
-    public String toString(){
-        return "Datos de Fabricante" + "\nNombre: " + this.getNombre() + "\nTelefono: "+ this.getTelefono()+"\nEmail: "+this.getEmail()+"\nDescripcion: "+this.getDescripcion();
-    }
-
+    
     /**
      * @return the piezafa
      */
@@ -130,6 +130,12 @@ public class Fabricante implements Serializable {
     public void setPiezafa(Pieza piezafa) {
         this.piezafa.add(piezafa);
     }
+    
+    @Override
+    public String toString(){
+        return "Datos de Fabricante" + "\nNombre: " + this.getNombre() + "\nTelefono: "+ this.getTelefono()+"\nEmail: "+this.getEmail()+"\nDescripcion: "+this.getDescripcion();
+    }
+
 
 
 }

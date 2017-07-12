@@ -22,11 +22,18 @@ public class Principal {
         emp.bajaEmpleado("2");
         emp.modificarEmpleado("1", "Cristian", "Pluhator", "Lavalle", "39638929", "nicolaspluhator@hotmail.com");
         
+        emp.altaPieza("pieza1");
+        emp.altaPieza("Tornillo");
+        emp.altaPieza("martillo");
+        
+        
         emp.altaProveedor("nombre", "asd", "dsdsd", "wesaa");
+        
+        
         emp.altaProveedor("ASDASD", "asd", "dsdsd", "wesaa");
         emp.altaProveedor("ASDASD", "asd", "dsdsd", "wesaa");
         emp.altaProveedor("ASDASD", "asd", "dsdsd", "wesaa");
-        //emp.bajaProveedor(2);
+        emp.bajaProveedor(2);
         emp.modificarProveedor(1, "LA EMPRESA", "DALE QUE SALE", "ADSADA", "DASDASD");
         
         emp.altaFabricante("nom", "asd", "des", "RARWRW");
@@ -34,6 +41,13 @@ public class Principal {
         emp.altaFabricante("nom3", "assadad3", "fdsades1", "adsfRARWRW2");
         emp.bajaFabricante(1);
         emp.modificarFabricante(2, "cambio", "eseeee", "jojojo", "tortolo");
+        
+        emp.altaEquipo("Lavado de envase", "Sector 1", "Clase a", 3);
+        emp.altaEquipo("Embotellamiento", "Sector 1", "Clase b", 4);
+        emp.altaEquipo("Embotellamiento", "Sector 1", "Clase b", 4);
+        emp.bajaEquipo(3);
+        emp.modificarEquipo(2, "Embotellamiento", "Sector 2", "Clase B");
+        
     }
     
 }

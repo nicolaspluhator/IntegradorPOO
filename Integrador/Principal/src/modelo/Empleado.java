@@ -18,6 +18,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="Empleado")
 public class Empleado implements Serializable {
+    
+    //ATRIBUTOS
     @Id
     private String cuil;
     @Column(name="Nombre",length=30)
@@ -136,17 +138,19 @@ public class Empleado implements Serializable {
         return email;
     }
 
-         
-    @Override
-    public String toString(){
-        return "Datos de Empleado: " + "\nCuil: " + this.getCuil() + "\nNombre: " + this.getNombre()+"\nApellido: " + this.getApellido() + "\nDireccion: "+this.getDireccion() + "\nTelefono: "+this.getTelefono()+"\nE-mail: "+this.getEmail();
-    }
-
-    /**
+        /**
      * @param email the email to set
      */
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    
+    @Override
+    public String toString(){
+        return "Datos de Empleado: " + "\nCuil: " + this.getCuil() + "\nNombre: " + this.getNombre()+"\nApellido: " + this.getApellido() + "\nDireccion: "+this.getDireccion() + "\nTelefono: "+this.getTelefono()+"\nE-mail: "+this.getEmail();
+    }
+
+
     
 }

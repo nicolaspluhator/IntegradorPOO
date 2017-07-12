@@ -15,7 +15,8 @@ import javax.persistence.*;
 @Table(name="Mantenimiento")
 public class Mantenimiento implements Serializable {
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name="sec_mantenimiento", initialValue=1, allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sec_mantenimiento")
     private int nromantenimiento;
     @Column(name="Fecha")
     @Temporal(javax.persistence.TemporalType.DATE)

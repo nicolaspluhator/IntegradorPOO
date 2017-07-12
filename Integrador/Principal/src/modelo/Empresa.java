@@ -40,6 +40,8 @@ public class Empresa implements Serializable,Comparable {
     private static Persistencia persistencia;
     @OneToMany (mappedBy="empreFa")
     private Set<Fabricante> fabricantes;
+    @OneToMany (mappedBy="emprepie")
+    private Set<Pieza> piezas;
     
     //Constructores ...
     public Empresa() {
@@ -182,6 +184,22 @@ public class Empresa implements Serializable,Comparable {
     public void setFabricantes(Fabricante fabricantes) {
         this.fabricantes.add(fabricantes);
     }
+    
+    /**
+     * @return the piezas
+     */
+    //public String getPiezas() {
+    public Set<Pieza> getPiezas() {
+        //return this.piezas.toString();
+        return this.piezas;
+    }
+
+    /**
+     * @param piezas the piezas to set
+     */
+    public void setPiezas(Pieza piezas) {
+        this.piezas.add(piezas);
+    }
 
     static {
         persistencia = new Persistencia();
@@ -255,7 +273,7 @@ public class Empresa implements Serializable,Comparable {
 
     //  --------------------- PROVEEDORES -----------------------------------------------------
     
-        public Proveedor buscarProveedor(int id) {
+    public Proveedor buscarProveedor(int id) {
         Proveedor unProveedor = (Proveedor) Empresa.getPersistencia().buscar(Proveedor.class, id);
         return unProveedor;
     }
@@ -296,6 +314,18 @@ public class Empresa implements Serializable,Comparable {
         }
         return unProveedor;
     }
+    
+/*    public Proveedor proveerPieza(Proveedor Provee, Set<Pieza> P){
+        
+        Proveedor unProveedor = Provee;
+        Iterator<Pieza> it = P.iterator();
+ 
+            while (it.hasNext()) {
+                unProveedor.setPiezapro(it.next());
+                
+            }           
+        return unProveedor;
+    }*/
  
     // ---------------------------- FABRICANTE ---------------------------------------------
     
@@ -309,7 +339,7 @@ public class Empresa implements Serializable,Comparable {
     public Fabricante altaFabricante (String n,String a,String d,String t){
         Fabricante unFabricante = null;
         
-            unFabricante = new Fabricante (n,a,d,t,this,null);
+            unFabricante = new Fabricante (n,a,d,t,this);
             this.setFabricantes(unFabricante);
             Empresa.getPersistencia().insertar(unFabricante);
             Empresa.getPersistencia().refrescar(this);
@@ -355,7 +385,97 @@ public class Empresa implements Serializable,Comparable {
 
         return unFabricante;
     }
+     
+//------------------------------ EQUIPO ---------------------------------------------------------
 
+      public Equipo buscarEquipo(int id) {
+        Equipo unEquipo = (Equipo) Empresa.getPersistencia().buscar(Equipo.class, id);
+        return unEquipo;
+    }
+    
+    
+    public Equipo altaEquipo (String d,String u,String c,int cant){
+        Equipo unEquipo = null;
+        
+            unEquipo = new Equipo (d, u, c, cant, this, null);
+            this.setEquipos(unEquipo);
+            Empresa.getPersistencia().insertar(unEquipo);
+            Empresa.getPersistencia().refrescar(this);
+            
+
+        return unEquipo;
+    }
+    
+     public Equipo bajaEquipo(int i){
+        Equipo unEquipo = this.buscarEquipo(i);
+        if(unEquipo != null){
+            Empresa.getPersistencia().eliminar(unEquipo);
+            Empresa.getPersistencia().refrescar(this);
+        }else{
+            System.out.println("El Equipo a eliminar no existe ... ");
+        }
+        return unEquipo;
+    }
+    
+    
+     public Equipo modificarEquipo(int i, String d,String u,String c){
+        Equipo unEquipo = this.buscarEquipo(i);
+        if(unEquipo != null){
+            
+            unEquipo.setDescripcion(d);
+            unEquipo.setUbicacion(u);
+            unEquipo.setClase(c);
+            Empresa.getPersistencia().modificar(unEquipo);
+            Empresa.getPersistencia().refrescar(this);
+        }else{
+            System.out.println("El Equipo a modificar no existe ... ");
+        }
+        return unEquipo;
+    }     
+
+//------------------------------ PIEZA ----------------------------------------------------------
+
+     public Pieza buscarPieza(int id) {
+        Pieza unaPieza = (Pieza) Empresa.getPersistencia().buscar(Pieza.class, id);
+        return unaPieza;
+    }
+
+
+     public Pieza altaPieza (String n){
+        Pieza unaPieza = null;
+        
+            unaPieza = new Pieza (n,this);
+            this.setPiezas(unaPieza);
+            Empresa.getPersistencia().insertar(unaPieza);
+            Empresa.getPersistencia().refrescar(this);
+            
+        return unaPieza;
+    }
+     
+     public Pieza bajaPieza(int c){
+        Pieza unaPieza = this.buscarPieza(c);
+        if(unaPieza != null){
+            Empresa.getPersistencia().eliminar(unaPieza);
+            Empresa.getPersistencia().refrescar(this);
+        }else{
+            System.out.println("La Pieza a eliminar no existe ... ");
+        }
+        return unaPieza;
+    }
+     
+    public Pieza modificarPieza(int c, String n){
+        Pieza unaPieza = this.buscarPieza(c);
+        if(unaPieza != null){
+            
+            unaPieza.setDenominacion(n);
+           
+            Empresa.getPersistencia().modificar(unaPieza);
+            Empresa.getPersistencia().refrescar(this);
+        }else{
+            System.out.println("La pieza a modificar no existe ... ");
+        }
+        return unaPieza;
+    } 
 
 
 }

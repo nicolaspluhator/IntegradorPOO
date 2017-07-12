@@ -14,8 +14,11 @@ import javax.persistence.*;
 @Entity
 @Table(name="Equipos")
 public class Equipo implements Serializable {
+    
+    //ATRIBUTOS
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name="sec_equi", initialValue=1, allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sec_equi")
     private int nroequipo;
     @Column(name="Descripcion",length=30)
     private String descripcion;
@@ -23,10 +26,12 @@ public class Equipo implements Serializable {
     private String ubicacion;
     @Column(name="Clase",length=30)
     private String clase;
+    @Column(name="Cantidad")
+    private int cant;    
+    
+    //RELACIONES
     @OneToMany
     private Set<Equipo> listequipo;
-    @Column(name="Cantidad")
-    private int cant;
     @ManyToOne
     private Empresa empresaequi;
     @ManyToOne
@@ -37,25 +42,25 @@ public class Equipo implements Serializable {
     
     }
     
-    public Equipo(int nro,String d,String u,String c){
-        this.nroequipo = nro;
+    public Equipo(String d,String u,String c, int can, Empresa emp, Pieza p){
+        //Modificaciones: (int nro,String d,String u,String c)
+        //this.nroequipo = nro;
         this.descripcion = d;
         this.ubicacion = u;
         this.clase = c;
-        this.listequipo = new TreeSet<>();
+        this.cant = can;
+        this.empresaequi = emp;
+        this.piezaequi = p;
+        //this.listequipo = new TreeSet<>();
     }
+    
+    //GETERS Y SETERS
+    
     /**
      * @return the nroequipo
      */
     public int getNroequipo() {
         return nroequipo;
-    }
-
-    /**
-     * @param nroequipo the nroequipo to set
-     */
-    public void setNroequipo(int nroequipo) {
-        this.nroequipo = nroequipo;
     }
 
     /**
@@ -124,9 +129,39 @@ public class Equipo implements Serializable {
     public void setCant(int cant) {
         this.cant = cant;
     }
+    
+    
+    /**
+     * @return the empresaequi
+     */
+    public Empresa getEmpresaequi() {
+        return empresaequi;
+    }
+
+    /**
+     * @param empresaequi the empresaequi to set
+     */
+    public void setEmpresaequi(Empresa empresaequi) {
+        this.empresaequi = empresaequi;
+    }
+
+    /**
+     * @return the piezaequi
+     */
+    public Pieza getPiezaequi() {
+        return piezaequi;
+    }
+
+    /**
+     * @param piezaequi the piezaequi to set
+     */
+    public void setPiezaequi(Pieza piezaequi) {
+        this.piezaequi = piezaequi;
+    }
         
     @Override
     public String toString(){
         return "Datos de equipo: " + "\nNumero de equipo: " + this.getNroequipo() + "\nDescripcion: " + this.getDescripcion() + "\nUbicacion: "+this.getUbicacion()+"\nClase: "+this.getClase()+"\nEquipos a los que pertenece: "+this.listequipo;
     }
+
 }

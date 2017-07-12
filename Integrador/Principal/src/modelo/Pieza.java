@@ -14,11 +14,20 @@ import javax.persistence.*;
 @Entity
 @Table(name="Pieza")
 public class Pieza implements Serializable {
-    @Id    
+    
+    //ATRIBUTOS
+    @Id
+    @SequenceGenerator(name="sec_pieza", initialValue=1, allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sec_pieza")
+    @Column (name = "IdPieza")
     private int nropieza;
     @Column(name="Denominacion",length=30)
     private String denominacion;
-    @ManyToMany 
+    
+    //RELACIONES
+    @ManyToOne
+    private Empresa emprepie;
+    @ManyToMany (cascade = {CascadeType.ALL})
     private Set<Proveedor> proveedores;
     @OneToMany (mappedBy = "piezaequi")
     private Set<Equipo> equipos;
@@ -32,7 +41,8 @@ public class Pieza implements Serializable {
     
     }
 
-    public Pieza(String d){
+    public Pieza(String d, Empresa emp){
+        this.emprepie = emp;
         this.denominacion= d;
         this.proveedores = new TreeSet<>();
         this.equipos = new TreeSet<>();
@@ -110,10 +120,39 @@ public class Pieza implements Serializable {
         this.fabricantes.add(fabricantes);
     }
     
+    /**
+     * @return the mantenimiento
+     */
+    public Mantenimiento getMantenimiento() {
+        return mantenimiento;
+    }
+
+    /**
+     * @param mantenimiento the mantenimiento to set
+     */
+    public void setMantenimiento(Mantenimiento mantenimiento) {
+        this.mantenimiento = mantenimiento;
+    }
+    
+    /**
+     * @return the emprepie
+     */
+    public Empresa getEmprepie() {
+        return emprepie;
+    }
+
+    /**
+     * @param emprepie the emprepie to set
+     */
+    public void setEmprepie(Empresa emprepie) {
+        this.emprepie = emprepie;
+    }
+    
     @Override
     public String toString(){
         return "Datos de pieza: " + "\nDenominacion: " + this.getDenominacion()+"\nProveedores: "+this.proveedores +"\nEquipos: "+this.equipos;
     }
+
 
 
 }
